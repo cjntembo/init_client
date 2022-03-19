@@ -7,7 +7,7 @@ export const EmployeeProvider = (props) => {
     const [employee, setEmployee] = useState({events:[]})
     const [searchTerms, setSearchTerms] = useState("")
 
-    const getEmployee = () => {
+    const getEmployees = () => {
         return fetch(`${url}/employees`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("init_token")}`
@@ -39,7 +39,7 @@ export const EmployeeProvider = (props) => {
       }
 
     const deleteEmployee = employeeId => {
-    return fetch(`${url}/peoples/${employeeId}`, {
+    return fetch(`${url}/employees/${employeeId}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Token ${localStorage.getItem("init_token")}`,
@@ -58,7 +58,7 @@ export const EmployeeProvider = (props) => {
           },
           body: JSON.stringify(employee)
         })
-        .then(getEmployee)
+        .then(getEmployees)
       }
 
     return (
@@ -66,7 +66,7 @@ export const EmployeeProvider = (props) => {
             searchTerms,
             setSearchTerms,
             employee,
-            getEmployee,
+            getEmployees,
             getEmployeeById,
             addEmployee,
             deleteEmployee,

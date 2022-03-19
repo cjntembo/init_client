@@ -1,24 +1,24 @@
 import React, { useState } from "react"
 
-export const CustomerContext = React.createContext()
+export const InventoryContext = React.createContext()
 const url = "http://localhost:8000"
 
-export const CustomerProvider = (props) => {
-    const [customer, setCustomer] = useState({events:[]})
+export const InventoryProvider = (props) => {
+    const [inventory, setInventory] = useState({events:[]})
     const [searchTerms, setSearchTerms] = useState("")
 
-    const getCustomers = () => {
-        return fetch(`${url}/customers`, {
+    const getInventories = () => {
+        return fetch(`${url}/inventories`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("init_token")}`
             }
         })
             .then(response => response.json())
-            .then(setCustomer)
+            .then(setInventory)
     }
 
-    const getCustomerById = customerId => {
-        return fetch(`${url}/customers/${customerId}`, {
+    const getInventoryById = inventoryId => {
+        return fetch(`${url}/inventories/${inventoryId}`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("init_token")}`
             }
@@ -26,53 +26,53 @@ export const CustomerProvider = (props) => {
         .then(res => res.json())
     }
 
-    const addCustomer = customer => {
-        return fetch(`${url}/customers`, {
+    const addInventory = inventory => {
+        return fetch(`${url}/inventories`, {
           method: "POST",
           headers: {
             "Authorization": `Token ${localStorage.getItem("init_token")}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(customer)
+          body: JSON.stringify(inventory)
         })
         .then(res => res.json())
       }
 
-    const deleteCustomer = customerId => {
-    return fetch(`${url}/customers/${customerId}`, {
+    const deleteInventory = inventoryId => {
+    return fetch(`${url}/inventories/${inventoryId}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Token ${localStorage.getItem("init_token")}`,
             "Content-Type": "application/json"
           }
     })
-    .then(getCustomers)
+    .then(getInventories)
     }
 
-    const updateCustomer = customer => {
-        return fetch(`${url}/customers/${customer.id}`, {
+    const updateInventory = inventory => {
+        return fetch(`${url}/inventories/${inventory.id}`, {
           method: "PUT",
           headers: {
             "Authorization": `Token ${localStorage.getItem("init_token")}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(customer)
+          body: JSON.stringify(inventory)
         })
-        .then(getCustomers)
+        .then(getInventories)
       }
 
     return (
-        <CustomerContext.Provider value={{
+        <InventoryContext.Provider value={{
             searchTerms,
             setSearchTerms,
-            customer,
-            getCustomers,
-            getCustomerById,
-            addCustomer,
-            deleteCustomer,
-            updateCustomer
+            inventory,
+            getInventories,
+            getInventoryById,
+            addInventory,
+            deleteInventory,
+            updateInventory
         }}>
             {props.children}
-        </CustomerContext.Provider>
+        </InventoryContext.Provider>
     )
 }

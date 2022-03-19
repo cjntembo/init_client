@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Redirect, useHistory } from "react-router-dom"
-// import { ApplicationViews } from "./ApplicationViews"
+import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/navBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
@@ -14,7 +14,7 @@ export const Init = () => {
             if (localStorage.getItem("init_token")) {
                 return <>
                     <NavBar />
-                    {/* <ApplicationViews /> */}
+                    <ApplicationViews />
                 </>
             } else {
                 return <Redirect to="/login" />

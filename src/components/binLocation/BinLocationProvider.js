@@ -1,24 +1,24 @@
 import React, { useState } from "react"
 
-export const CustomerContext = React.createContext()
+export const BinLocationContext = React.createContext()
 const url = "http://localhost:8000"
 
-export const CustomerProvider = (props) => {
-    const [customer, setCustomer] = useState({events:[]})
+export const BinLocationProvider = (props) => {
+    const [binLocation, setBinLocation] = useState({events:[]})
     const [searchTerms, setSearchTerms] = useState("")
 
-    const getCustomers = () => {
-        return fetch(`${url}/customers`, {
+    const getBinLocations = () => {
+        return fetch(`${url}/bin_locations`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("init_token")}`
             }
         })
             .then(response => response.json())
-            .then(setCustomer)
+            .then(setBinLocation)
     }
 
-    const getCustomerById = customerId => {
-        return fetch(`${url}/customers/${customerId}`, {
+    const getBinLocationById = binLocationId => {
+        return fetch(`${url}/bin_locations/${binLocationId}`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("init_token")}`
             }
@@ -26,53 +26,53 @@ export const CustomerProvider = (props) => {
         .then(res => res.json())
     }
 
-    const addCustomer = customer => {
-        return fetch(`${url}/customers`, {
+    const addBinLocation = binLocation => {
+        return fetch(`${url}/bin_locations`, {
           method: "POST",
           headers: {
             "Authorization": `Token ${localStorage.getItem("init_token")}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(customer)
+          body: JSON.stringify(binLocation)
         })
         .then(res => res.json())
       }
 
-    const deleteCustomer = customerId => {
-    return fetch(`${url}/customers/${customerId}`, {
+    const deleteBinLocation = binLocationId => {
+    return fetch(`${url}/bin_locations/${binLocationId}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Token ${localStorage.getItem("init_token")}`,
             "Content-Type": "application/json"
           }
     })
-    .then(getCustomers)
+    .then(getBinLocations)
     }
 
-    const updateCustomer = customer => {
-        return fetch(`${url}/customers/${customer.id}`, {
+    const updateBinLocation = binLocation => {
+        return fetch(`${url}/bin_locations/${binLocation.id}`, {
           method: "PUT",
           headers: {
             "Authorization": `Token ${localStorage.getItem("init_token")}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(customer)
+          body: JSON.stringify(binLocation)
         })
-        .then(getCustomers)
+        .then(getBinLocations)
       }
 
     return (
-        <CustomerContext.Provider value={{
+        <BinLocationContext.Provider value={{
             searchTerms,
             setSearchTerms,
-            customer,
-            getCustomers,
-            getCustomerById,
-            addCustomer,
-            deleteCustomer,
-            updateCustomer
+            binLocation,
+            getBinLocations,
+            getBinLocationById,
+            addBinLocation,
+            deleteBinLocation,
+            updateBinLocation
         }}>
             {props.children}
-        </CustomerContext.Provider>
+        </BinLocationContext.Provider>
     )
 }
