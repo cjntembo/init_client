@@ -10,6 +10,7 @@ export const EmployeeCreate = () => {
     const {addEmployee, getEmployees} = useContext(EmployeeContext)
     const [employee, setEmployee] = useState([]);
 
+   
 
     useEffect(() => {
         getEmployees().then((data) => setEmployee(data))
@@ -27,6 +28,9 @@ export const EmployeeCreate = () => {
             window.alert("Please enter employee")
         } else {
             addEmployee({
+                first_name:employee.user.first_name,
+                last_name:employee.user.last_name,
+                email:employee.user.email,
                 birth_date: employee.birth_date,
                 address: employee.address,
                 city: employee.city,
@@ -42,6 +46,24 @@ export const EmployeeCreate = () => {
     return(
         <form className="employeeForm">
             <h2 className="employeeForm_title">New Employee</h2>
+            <fieldset>
+                <div className="form-group">
+                    <label htmlFor="first_name">First Name: </label>
+                    <input type="text" id="first_name" required autoFocus className="form-control" placeholder="Employee First Name" onChange={handleControlledInputChange} defaultValue={employee?.first_name} />
+                </div>
+            </fieldset>
+                <fieldset>
+                <div className="form-group">
+                    <label htmlFor="last_name">Employee Last Name: </label>
+                    <input type="text" id="last_name" required autoFocus className="form-control" placeholder="Employee Last Name" onChange={handleControlledInputChange} defaultValue={employee?.last_name} />
+                </div>
+            </fieldset>
+                <fieldset>
+                <div className="form-group">
+                    <label htmlFor="email">Employee Email: </label>
+                    <input type="email" id="email" required autoFocus className="form-control" placeholder="Employee Email" onChange={handleControlledInputChange} defaultValue={employee?.email} />
+                </div>
+            </fieldset>
             <fieldset>
                 <div className="form-group">
                     <label htmlFor="birth_date">Birth Date: </label>

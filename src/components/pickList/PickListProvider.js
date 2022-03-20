@@ -12,7 +12,7 @@ export const PickListProvider = (props) => {
     const getPickLists = () => {
         return fetch(`${url}/pick_lists`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`
             }
         })
             .then(response => response.json())
@@ -22,7 +22,7 @@ export const PickListProvider = (props) => {
     const getPickListById = pickListId => {
         return fetch(`${url}/pick_lists/${pickListId}`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`
             }
         })
         .then(res => res.json())
@@ -32,7 +32,7 @@ export const PickListProvider = (props) => {
         return fetch(`${url}/pick_lists`, {
           method: "POST",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(pickList)
@@ -44,7 +44,7 @@ export const PickListProvider = (props) => {
     return fetch(`${url}/pick_lists/${pickListId}`, {
         method: "DELETE",
         headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`,
             "Content-Type": "application/json"
           }
     })
@@ -55,7 +55,7 @@ export const PickListProvider = (props) => {
         return fetch(`${url}/pick_lists/${pickList.id}`, {
           method: "PUT",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(pickList)
@@ -67,7 +67,7 @@ export const PickListProvider = (props) => {
       const getPickListLines = () => {
         return fetch(`${url}/pick_list_lines`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`
             }
         })
             .then(response => response.json())
@@ -77,7 +77,7 @@ export const PickListProvider = (props) => {
     const getPickListLineById = pickListLineId => {
         return fetch(`${url}/pick_list_lines/${pickListLineId}`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`
             }
         })
         .then(res => res.json())
@@ -87,7 +87,7 @@ export const PickListProvider = (props) => {
         return fetch(`${url}/pick_list_lines`, {
           method: "POST",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(pickListLine)
@@ -99,7 +99,7 @@ export const PickListProvider = (props) => {
     return fetch(`${url}/pick_list_lines/${pickListLineId}`, {
         method: "DELETE",
         headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`,
             "Content-Type": "application/json"
           }
     })
@@ -110,7 +110,7 @@ export const PickListProvider = (props) => {
         return fetch(`${url}/pick_list_lines/${pickListLine.id}`, {
           method: "PUT",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_fianl_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(pickListLine)

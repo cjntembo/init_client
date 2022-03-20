@@ -10,7 +10,7 @@ export const BinLocationProvider = (props) => {
     const getBinLocations = () => {
         return fetch(`${url}/bin_locations`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
             .then(response => response.json())
@@ -20,7 +20,7 @@ export const BinLocationProvider = (props) => {
     const getBinLocationById = binLocationId => {
         return fetch(`${url}/bin_locations/${binLocationId}`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
         .then(res => res.json())
@@ -30,7 +30,7 @@ export const BinLocationProvider = (props) => {
         return fetch(`${url}/bin_locations`, {
           method: "POST",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(binLocation)
@@ -42,7 +42,7 @@ export const BinLocationProvider = (props) => {
     return fetch(`${url}/bin_locations/${binLocationId}`, {
         method: "DELETE",
         headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           }
     })
@@ -53,7 +53,7 @@ export const BinLocationProvider = (props) => {
         return fetch(`${url}/bin_locations/${binLocation.id}`, {
           method: "PUT",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(binLocation)

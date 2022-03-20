@@ -13,7 +13,7 @@ export const EmployeeList = () => {
     useEffect(() => {
         getEmployees()
     }, [])
-
+    
     const history = useHistory()
 
     return(
@@ -24,18 +24,16 @@ export const EmployeeList = () => {
                 Create a new Employee
             </button>
             <ul className='employees_list'>
-                
                 {
                 employees && employees.map(employee => {
                     return (
                         <li>
-                          {employees.id}
-                          <button className='employees_edit' 
-                          onClick={() => {history.push(`/employees/edit/${employees.id}`)}}>Edit</button>
-                          <button onClick={() => {handleDelete(employees.id)}}>Delete Employee</button>
+                          {employee.user.first_name} {employee.user.last_name}
+                          <button className='employee_edit' 
+                          onClick={() => {history.push(`/employees/edit/${employee.id}`)}}>Edit</button>
+                          <button onClick={() => {handleDelete(employee.id)}}>Delete Employee</button>
                         </li>
                     )
-                   
                 })
                 }
             </ul>

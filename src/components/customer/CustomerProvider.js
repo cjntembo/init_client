@@ -4,23 +4,23 @@ export const CustomerContext = React.createContext()
 const url = "http://localhost:8000"
 
 export const CustomerProvider = (props) => {
-    const [customer, setCustomer] = useState({events:[]})
+    const [customers, setCustomers] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
 
     const getCustomers = () => {
         return fetch(`${url}/customers`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
             .then(response => response.json())
-            .then(setCustomer)
+            .then(setCustomers)
     }
 
     const getCustomerById = customerId => {
         return fetch(`${url}/customers/${customerId}`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
         .then(res => res.json())
@@ -30,7 +30,7 @@ export const CustomerProvider = (props) => {
         return fetch(`${url}/customers`, {
           method: "POST",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(customer)
@@ -42,7 +42,7 @@ export const CustomerProvider = (props) => {
     return fetch(`${url}/customers/${customerId}`, {
         method: "DELETE",
         headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           }
     })
@@ -53,7 +53,7 @@ export const CustomerProvider = (props) => {
         return fetch(`${url}/customers/${customer.id}`, {
           method: "PUT",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(customer)
@@ -65,7 +65,7 @@ export const CustomerProvider = (props) => {
         <CustomerContext.Provider value={{
             searchTerms,
             setSearchTerms,
-            customer,
+            customers,
             getCustomers,
             getCustomerById,
             addCustomer,

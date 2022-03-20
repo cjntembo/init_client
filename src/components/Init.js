@@ -11,7 +11,7 @@ export const Init = () => {
         return(
     <>
         <Route render={() => {
-            if (localStorage.getItem("init_token")) {
+            if (localStorage.getItem("init_final_token")) {
                 return <>
                     <NavBar />
                     <ApplicationViews />
@@ -22,7 +22,7 @@ export const Init = () => {
         }} />
 
         <Route path="/login" render={() => {
-            if (localStorage.getItem("init_token")) {
+            if (localStorage.getItem("init_final_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Login />
@@ -30,7 +30,7 @@ export const Init = () => {
         }} />
 
         <Route path="/register" render={() => {
-            if (localStorage.getItem("init_token")) {
+            if (localStorage.getItem("init_final_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Register history = {history}/>

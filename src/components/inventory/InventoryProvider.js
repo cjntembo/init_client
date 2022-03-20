@@ -10,7 +10,7 @@ export const InventoryProvider = (props) => {
     const getInventories = () => {
         return fetch(`${url}/inventories`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
             .then(response => response.json())
@@ -20,7 +20,7 @@ export const InventoryProvider = (props) => {
     const getInventoryById = inventoryId => {
         return fetch(`${url}/inventories/${inventoryId}`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
         .then(res => res.json())
@@ -30,7 +30,7 @@ export const InventoryProvider = (props) => {
         return fetch(`${url}/inventories`, {
           method: "POST",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(inventory)
@@ -42,7 +42,7 @@ export const InventoryProvider = (props) => {
     return fetch(`${url}/inventories/${inventoryId}`, {
         method: "DELETE",
         headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           }
     })
@@ -53,7 +53,7 @@ export const InventoryProvider = (props) => {
         return fetch(`${url}/inventories/${inventory.id}`, {
           method: "PUT",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(inventory)
