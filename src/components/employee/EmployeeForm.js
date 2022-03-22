@@ -5,7 +5,13 @@ import { EmployeeContext } from "./EmployeeProvider"
 
 export const EmployeeForm = () => {
     const history = useHistory()
-    const {updateEmployee, updateEmployeeById,addEmployee, getEmployees, getEmployeeById, employee} = useContext(EmployeeContext)
+    const {updateEmployee,
+        updateEmployeeById,
+        getEmployees,
+        addEmployee,
+        getEmployeeById,
+        employee} = useContext(EmployeeContext)
+
     
     const { employeeId } = useParams()
     
@@ -22,10 +28,62 @@ export const EmployeeForm = () => {
         phone_number: ""
     })
 
+    
+ 
+    const handleControlledInputChange = (event) => {
+        const newEmployee = {...currentEmployee}
+        newEmployee[event.target.name] = event.target.value
+        setCurrentEmployee(newEmployee)
+    };
+
+    const handleSaveEmployee = () => {
+        if (employeeId === 0) {
+            window.alert("Please Create New Employee")
+        } else {
+            if (employeeId) {
+                updateEmployee({
+                    id: employee.id,
+                    first_name: employee.user.first_name,
+                    last_name: employee.last_name,
+                    email: employee.email,
+                    birth_date: employee.birth_date,
+                    address: employee.address,
+                    city: employee.city,
+                    state: employee.state,
+                    postal_code: employee.postal_code,
+                    country: employee.country,
+                    phone_number: employee.phone_number
+                })
+                    .then(() => history.push("/employees"))
+            } else {
+                
+                addEmployee({
+                    first_name: currentEmployee.first_name,
+                    last_name: currentEmployee.last_name,
+                    email: currentEmployee.email,
+                    birth_date: currentEmployee.birth_date,
+                    address: currentEmployee.address,
+                    city: currentEmployee.city,
+                    state: currentEmployee.state,
+                    postal_code: currentEmployee.postal_code,
+                    country: currentEmployee.country,
+                    phone_number: currentEmployee.phone_number
+                })
+                    .then(() => history.push("/employees"))
+            }
+        }
+    }
+
     useEffect(() => {
-            getEmployeeById(employeeId).then((res) => {setCurrentEmployee(res)})
-            console.log(employee)
-        }, []);
+        getEmployees()
+    },[]);
+
+    useEffect(() => {getEmployeeById(parseInt(employeeId))
+    .then(employee=>{
+        setCurrentEmployee(employee)
+    })
+},[]);
+    // const editMode = employee.id ? true : false
 
     // useEffect(() => {
     //     if(employeeId) {
@@ -47,160 +105,114 @@ export const EmployeeForm = () => {
     //         })
     //     }
     // }, [employeeId])
-
-
-
-
-    const handleControlledInputChange = (event) => {
-        const newEmployee = {...currentEmployee}
-        newEmployee[event.target.name] = event.target.value
-        setCurrentEmployee(newEmployee)
-    };
-
-    // const editMode = currentEmployee.id ? true : false
-
-    const SaveEmployee = () => {
-        if (employeeId) {
-            updateEmployee({
-                id: employee.id,
-                first_name: employee.first_name,
-                last_name: employee.last_name,
-                email: employee.email,
-                birth_date: employee.birth_date,
-                address: employee.address,
-                city: employee.city,
-                state: employee.state,
-                postal_code: employee.postal_code,
-                country: employee.country,
-                phone_number: employee.phone_number
-            })
-            .then(() => history.push("/employees"))
-        } else {
-            addEmployee({
-                first_name:currentEmployee.first_name,
-                last_name:currentEmployee.last_name,
-                email:currentEmployee.email,
-                birth_date: currentEmployee.birth_date,
-                address: currentEmployee.address,
-                city: currentEmployee.city,
-                state: currentEmployee.state,
-                postal_code: currentEmployee.postal_code,
-                country: currentEmployee.country,
-                phone_number: currentEmployee.phone_number
-            })
-            .then(() => history.push("/employees"))
-        }
-    }
-
     
-
-
+    
     return (
         <>
-            <h1>{employee?.first_name} {employee?.last_name}</h1>
-            <div className='employee_edit'>
-                <form className='employee_edit_form'>
+            <form className='employee_edit_form'>
+                <h2>{employee?.first_name} {employee?.last_name}</h2>
+                <div className='employee_edit'>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="first_name">Employee First Name: </label>
-                            <input type="text" key={currentEmployee?.first_name} name="first_name" required autoFocus className="form-control"
+                            <input type="text" name="first_name" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.first_name}
-                                value={employee ? employee?.user.first_name : currentEmployee?.user.first_name}
+                                defaultValue={employee ? employee?.first_name : currentEmployee?.first_name}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="last_name">Employee Last Name: </label>
-                            <input type="text" key={currentEmployee?.last_name} name="last_name" required autoFocus className="form-control"
+                            <input type="text" name="last_name" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.last_name}
-                                value={employee ? employee?.user.last_name : currentEmployee?.user.last_name}
+                                defaultValue={employee ? employee?.last_name : currentEmployee?.last_name}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="email">Employee Email: </label>
-                            <input type="text" key={currentEmployee?.email} name="email" required autoFocus className="form-control"
+                            <input type="text" name="email" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.email}
-                                value={employee ? employee?.user.email : currentEmployee?.user.email}
+                                defaultValue={employee ? employee?.email : currentEmployee?.email}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="birth_date">Employee Birth Date: </label>
-                            <input type="date" key={currentEmployee?.birth_date} name="birth_date" required autoFocus className="form-control"
+                            <input type="date" name="birth_date" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.birth_date}
-                                value={employee ? employee?.birth_date : currentEmployee?.birth_date}
+                                defaultValue={employee ? employee?.birth_date : currentEmployee?.birth_date}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="address">Employee Address: </label>
-                            <input type="text" key={currentEmployee?.address} name="address" required autoFocus className="form-control"
+                            <input type="text" name="address" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.address}
-                                value={employee ? employee?.address : currentEmployee?.address}
+                                defaultValue={employee ? employee?.address : currentEmployee?.address}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="city">City: </label>
-                            <input type="text" key={currentEmployee?.city} name="city" required autoFocus className="form-control"
+                            <input type="text" name="city" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.city}
-                                value={employee ? employee?.city : currentEmployee?.city}
+                                defaultValue={employee ? employee?.city : currentEmployee?.city}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="state">State: </label>
-                            <input type="text" key={currentEmployee?.state} name="state" required autoFocus className="form-control"
+                            <input type="text" name="state" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.state}
-                                value={employee ? employee?.state : currentEmployee?.state}
+                                defaultValue={employee ? employee?.state : currentEmployee?.state}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="postal_code">Postal Code: </label>
-                            <input type="number" key={currentEmployee?.postal_code} name="postal_code" required autoFocus className="form-control"
+                            <input type="text" name="postal_code" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.postal_code}
-                                value={employee ? employee?.postal_code : currentEmployee?.postal_code}
+                                defaultValue={employee ? employee?.postal_code : currentEmployee?.postal_code}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="country">Country: </label>
-                            <input type="text" key={currentEmployee?.country} name="country" required autoFocus className="form-control"
+                            <input type="tel" name="country" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.country}
-                                value={employee ? employee?.country : currentEmployee?.country}
+                                defaultValue={employee ? employee?.country : currentEmployee?.country}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     {/* <button 
-                type="submit" 
-                onClick={(e) => { e.preventDefault()
-                    SaveEmployee()}} 
-                    className="btn btn-primary">
-                    Save
-                </button> */}
+                    type="submit" 
+                    onClick={(e) => { e.preventDefault()
+                        SaveEmployee()}} 
+                        className="btn btn-primary">
+                        Save
+                    </button> */}
                     <button
                         type="submit"
                         onClick={(evt) => {
                             evt.preventDefault();
-                            SaveEmployee();
+                            handleSaveEmployee();
                         }}
                         className="btn btn-primary"
                     >
-                        {employeeId ?  <>Save Employee</> : <>Create New Employee</>}
+                        {employeeId ? <>Save Employee</> : <>Create New Employee</>}
                     </button>
                     <button className='employee_edit--cancel' onClick={() => { history.push('/employees') }}>Cancel</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </>
     )
 }

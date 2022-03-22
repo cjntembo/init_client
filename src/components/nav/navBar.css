@@ -1,4 +1,7 @@
 .navbar {
+    background-color: rgb(98, 98, 202);
+    margin: 2px;
+    padding: 40px;
     display: flex;
     flex-wrap: nowrap;
     justify-content: left;
@@ -10,5 +13,5 @@
 }
 
 .navbar__logo {
-    max-height: 6rem;
+    max-height: 5rem;
 }

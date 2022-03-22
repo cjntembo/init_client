@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react"
-import { Link } from "react-router-dom"
 import { useHistory } from 'react-router-dom'
 import { CustomerContext  } from "./CustomerProvider"
 // import "./Customer.css"

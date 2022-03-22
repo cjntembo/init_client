@@ -4,7 +4,8 @@ export const BinLocationContext = React.createContext()
 const url = "http://localhost:8000"
 
 export const BinLocationProvider = (props) => {
-    const [binLocation, setBinLocation] = useState({events:[]})
+    const [bin_locations, setBin_locations ] = useState([])
+    const [bin_location, setBin_location] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
 
     const getBinLocations = () => {
@@ -14,32 +15,33 @@ export const BinLocationProvider = (props) => {
             }
         })
             .then(response => response.json())
-            .then(setBinLocation)
+            .then(setBin_locations)
     }
 
-    const getBinLocationById = binLocationId => {
-        return fetch(`${url}/bin_locations/${binLocationId}`, {
+    const getBinLocationById = bin_locationId => {
+        return fetch(`${url}/bin_locations/${bin_locationId}`, {
             headers: {
                 "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
         .then(res => res.json())
+        .then(setBin_location)
     }
 
-    const addBinLocation = binLocation => {
+    const addBinLocation = bin_location => {
         return fetch(`${url}/bin_locations`, {
           method: "POST",
           headers: {
             "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(binLocation)
+          body: JSON.stringify(bin_location)
         })
         .then(res => res.json())
       }
 
-    const deleteBinLocation = binLocationId => {
-    return fetch(`${url}/bin_locations/${binLocationId}`, {
+    const deleteBinLocation = bin_locationId => {
+    return fetch(`${url}/bin_locations/${bin_locationId}`, {
         method: "DELETE",
         headers: {
             "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
@@ -49,28 +51,43 @@ export const BinLocationProvider = (props) => {
     .then(getBinLocations)
     }
 
-    const updateBinLocation = binLocation => {
-        return fetch(`${url}/bin_locations/${binLocation.id}`, {
+    const updateBinLocation = bin_location => {
+        return fetch(`${url}/bin_locations/${bin_location.id}`, {
           method: "PUT",
           headers: {
             "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(binLocation)
+          body: JSON.stringify(bin_location)
         })
         .then(getBinLocations)
       }
+
+    const updateBinLocationById = bin_location => {
+      return fetch(`${url}/bin_locations/${bin_location.id}`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Token ${localStorage.getItem("init_final_token")
+        }`,
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bin_location)
+      })
+      .then(getBinLocations)
+    }
 
     return (
         <BinLocationContext.Provider value={{
             searchTerms,
             setSearchTerms,
-            binLocation,
+            bin_locations,
+            bin_location,
             getBinLocations,
             getBinLocationById,
             addBinLocation,
             deleteBinLocation,
-            updateBinLocation
+            updateBinLocation,
+            updateBinLocationById
         }}>
             {props.children}
         </BinLocationContext.Provider>

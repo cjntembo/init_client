@@ -4,7 +4,8 @@ export const InventoryContext = React.createContext()
 const url = "http://localhost:8000"
 
 export const InventoryProvider = (props) => {
-    const [inventory, setInventory] = useState({events:[]})
+    const [inventories, setInventories] = useState([])
+    const [inventory, setInventory] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
 
     const getInventories = () => {
@@ -14,7 +15,7 @@ export const InventoryProvider = (props) => {
             }
         })
             .then(response => response.json())
-            .then(setInventory)
+            .then(setInventories)
     }
 
     const getInventoryById = inventoryId => {
@@ -24,6 +25,7 @@ export const InventoryProvider = (props) => {
             }
         })
         .then(res => res.json())
+        .then(setInventory)
     }
 
     const addInventory = inventory => {
@@ -61,16 +63,31 @@ export const InventoryProvider = (props) => {
         .then(getInventories)
       }
 
+    const updateInventoryById = inventory => {
+      return fetch(`${url}/bin_locations/${inventory.id}`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Token ${localStorage.getItem("init_final_token")
+        }`,
+        "Content-Type": "application/json"
+        },
+        body: JSON.stringify(inventory)
+      })
+      .then(getInventories)
+    }
+
     return (
         <InventoryContext.Provider value={{
             searchTerms,
             setSearchTerms,
+            inventories,
             inventory,
             getInventories,
             getInventoryById,
             addInventory,
             deleteInventory,
-            updateInventory
+            updateInventory,
+            updateInventoryById
         }}>
             {props.children}
         </InventoryContext.Provider>

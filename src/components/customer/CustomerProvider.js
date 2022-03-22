@@ -5,6 +5,7 @@ const url = "http://localhost:8000"
 
 export const CustomerProvider = (props) => {
     const [customers, setCustomers] = useState([])
+    const [customer, setCustomer] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
 
     const getCustomers = () => {
@@ -24,6 +25,7 @@ export const CustomerProvider = (props) => {
             }
         })
         .then(res => res.json())
+        .then(setCustomer)
     }
 
     const addCustomer = customer => {
@@ -61,16 +63,31 @@ export const CustomerProvider = (props) => {
         .then(getCustomers)
       }
 
+  const updateCustomerById = customer => {
+    return fetch(`${url}/customers/${customer.id}`, {
+      method: "PUT",
+      headers: {
+        "Authorization": `Token ${localStorage.getItem("init_final_token")
+          }`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(customer)
+    })
+      .then(getCustomers)
+  }
+
     return (
         <CustomerContext.Provider value={{
             searchTerms,
             setSearchTerms,
             customers,
+            customer,
             getCustomers,
             getCustomerById,
             addCustomer,
             deleteCustomer,
-            updateCustomer
+            updateCustomer,
+            updateCustomerById
         }}>
             {props.children}
         </CustomerContext.Provider>
