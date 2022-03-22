@@ -27,12 +27,14 @@ export const EmployeeList = () => {
                 {
                 employees && employees.map(employee => {
                     return (
-                        <li>
-                          {employee.user.first_name} {employee.user.last_name}
-                          <button className='employee_edit' 
-                          onClick={() => {history.push(`/employees/edit/${employee.id}`)}}>Edit</button>
-                          <button onClick={() => {handleDelete(employee.id)}}>Delete Employee</button>
-                        </li>
+                        <section key={`employee--${employee.id}`}>
+                            <li>
+                            {employee.user.first_name} {employee.user.last_name}<br/>
+                            <button className='employee_edit' 
+                            onClick={() => {history.push(`/employees/edit/${employee.id}`)}}>Edit</button>
+                            <button onClick={() => {handleDelete(employee.id)}}>Delete Employee</button>
+                            </li>
+                        </section>
                     )
                 })
                 }

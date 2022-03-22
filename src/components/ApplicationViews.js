@@ -34,6 +34,10 @@ export const ApplicationViews = () => {
                     <InventoryProvider>
                       <PickListProvider>
 
+                        <Route exact path="/">
+                          <PickListList />
+                        </Route>
+
                         <Route exact path="/employees">
                           <EmployeeList />
                         </Route>
@@ -74,7 +78,7 @@ export const ApplicationViews = () => {
                           <InventoryForm />
                         </Route>
 
-                        <Route exact path="pick_lists">
+                        <Route exact path="/pick_lists">
                           <PickListList />
                         </Route>
                         <Route exact path="/pick_lists/create">
