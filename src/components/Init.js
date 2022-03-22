@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Redirect, useHistory } from "react-router-dom"
-// import { ApplicationViews } from "./ApplicationViews"
+import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/navBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
@@ -11,10 +11,10 @@ export const Init = () => {
         return(
     <>
         <Route render={() => {
-            if (localStorage.getItem("init_token")) {
+            if (localStorage.getItem("init_final_token")) {
                 return <>
                     <NavBar />
-                    {/* <ApplicationViews /> */}
+                    <ApplicationViews />
                 </>
             } else {
                 return <Redirect to="/login" />
@@ -22,7 +22,7 @@ export const Init = () => {
         }} />
 
         <Route path="/login" render={() => {
-            if (localStorage.getItem("init_token")) {
+            if (localStorage.getItem("init_final_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Login />
@@ -30,7 +30,7 @@ export const Init = () => {
         }} />
 
         <Route path="/register" render={() => {
-            if (localStorage.getItem("init_token")) {
+            if (localStorage.getItem("init_final_token")) {
                 return <Redirect to="/" />
             } else {
                 return <Register history = {history}/>

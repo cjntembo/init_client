@@ -4,33 +4,35 @@ export const EmployeeContext = React.createContext()
 const url = "http://localhost:8000"
 
 export const EmployeeProvider = (props) => {
-    const [employee, setEmployee] = useState({events:[]})
+    const [employees, setEmployees] = useState([])
+    const [employee, setEmployee] = useState([])
     const [searchTerms, setSearchTerms] = useState("")
 
-    const getEmployee = () => {
+    const getEmployees = () => {
         return fetch(`${url}/employees`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
             .then(response => response.json())
-            .then(setEmployee)
+            .then(setEmployees)
     }
 
-    const getEmployeeById = employeeId => {
+    const getEmployeeById = (employeeId) => {
         return fetch(`${url}/employees/${employeeId}`, {
             headers: {
-                "Authorization": `Token ${localStorage.getItem("init_token")}`
+                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
             }
         })
         .then(res => res.json())
+        .then(setEmployee)
     }
 
     const addEmployee = employee => {
         return fetch(`${url}/employees`, {
           method: "POST",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(employee)
@@ -39,10 +41,10 @@ export const EmployeeProvider = (props) => {
       }
 
     const deleteEmployee = employeeId => {
-    return fetch(`${url}/peoples/${employeeId}`, {
+    return fetch(`${url}/employees/${employeeId}`, {
         method: "DELETE",
         headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           }
     })
@@ -53,24 +55,38 @@ export const EmployeeProvider = (props) => {
         return fetch(`${url}/employees/${employee.id}`, {
           method: "PUT",
           headers: {
-            "Authorization": `Token ${localStorage.getItem("init_token")}`,
+            "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify(employee)
         })
-        .then(getEmployee)
+        .then(getEmployees)
       }
+
+    const updateEmployeeById = (employee) => {
+      return fetch(`${url}/employees/${employee.id}`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Token ${localStorage.getItem("init_final_token")}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(employee)
+      })
+      .then(getEmployees)
+    }
 
     return (
         <EmployeeContext.Provider value={{
             searchTerms,
             setSearchTerms,
+            employees,
             employee,
-            getEmployee,
+            getEmployees,
             getEmployeeById,
             addEmployee,
             deleteEmployee,
-            updateEmployee
+            updateEmployee,
+            updateEmployeeById
         }}>
             {props.children}
         </EmployeeContext.Provider>
