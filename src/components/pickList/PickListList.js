@@ -9,7 +9,7 @@ import { InventoryContext } from "../inventory/InventoryProvider";
 
 export const PickListList = () => { 
     const {getPickLists, deletePickList, pick_lists, setPickList} = useContext(PickListContext)
-    const { getEmployees, setEmployee } = useContext(EmployeeContext)
+    const { getEmployees, setEmployee,employee } = useContext(EmployeeContext)
     const { getCustomers, setCustomer } = useContext(CustomerContext)
     const { getInventories, setInventory} = useContext(InventoryContext)
 
@@ -19,9 +19,9 @@ export const PickListList = () => {
 
     useEffect(() => {
         getPickLists()
-        getEmployees()
-        getCustomers()
-        getInventories()
+        // getEmployees()
+        // getCustomers()
+        // getInventories()
     }, [])
 
     const history = useHistory()
@@ -39,9 +39,11 @@ export const PickListList = () => {
                             return (
                                 <section key={`pick_list--${pick_list.id}`}>
                                     <li >
-                                        {/* Customer: {pick_list.customer.id}<br/>
-                                        Pick By: {pick_list.picked_by}<br/> */}
+                                        
+                                        Customer: {pick_list.customer?.first_name} {pick_list.customer?.last_name}<br/>
+                                        Pick By: {pick_list?.employee?.first_name}<br/>
                                         Pick List Due Date: {pick_list.pick_list_date}<br/>
+                                        Detail: {pick_list?.pick_list_line}<br/>
                                         <button onClick={() => { history.push(`/pick_lists/edit/${pick_list.id}`) }}>Edit</button>
                                         <button onClick={() => { handleDelete(pick_list.id) }}>Delete Pick list</button>
                                     </li>

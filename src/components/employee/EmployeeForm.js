@@ -43,7 +43,7 @@ export const EmployeeForm = () => {
             if (employeeId) {
                 updateEmployee({
                     id: employee.id,
-                    first_name: employee.user.first_name,
+                    first_name: employee.first_name,
                     last_name: employee.last_name,
                     email: employee.email,
                     birth_date: employee.birth_date,
@@ -110,14 +110,14 @@ export const EmployeeForm = () => {
     return (
         <>
             <form className='employee_edit_form'>
-                <h2>{employee?.first_name} {employee?.last_name}</h2>
+                <h2>{employee?.user?.first_name} {employee?.user?.last_name}</h2>
                 <div className='employee_edit'>
                     <fieldset>
                         <div className="employee_edit_form_group">
                             <label htmlFor="first_name">Employee First Name: </label>
                             <input type="text" name="first_name" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.first_name}
-                                defaultValue={employee ? employee?.first_name : currentEmployee?.first_name}
+                                defaultValue={employee ? employee?.user?.first_name : currentEmployee?.first_name}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
@@ -126,7 +126,7 @@ export const EmployeeForm = () => {
                             <label htmlFor="last_name">Employee Last Name: </label>
                             <input type="text" name="last_name" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.last_name}
-                                defaultValue={employee ? employee?.last_name : currentEmployee?.last_name}
+                                defaultValue={employee ? employee?.user?.last_name : currentEmployee?.last_name}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
@@ -135,7 +135,7 @@ export const EmployeeForm = () => {
                             <label htmlFor="email">Employee Email: </label>
                             <input type="text" name="email" required autoFocus className="form-control"
                                 placeholder={currentEmployee?.email}
-                                defaultValue={employee ? employee?.email : currentEmployee?.email}
+                                defaultValue={employee ? employee?.user?.email : currentEmployee?.email}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
