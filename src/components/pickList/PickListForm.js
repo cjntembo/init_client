@@ -11,21 +11,11 @@ export const PickListForm = () => {
     const history = useHistory()
     const {
         pick_list,
-        pick_lists,
         getPickLists,
-        getPickListById,
-        addPickList,
-        deletePickList,
-        updatePickList,
-        updatePickListById,
-        pick_list_line,
-        pick_list_lines,
         getPickListLines,
-        getPickListLineById,
-        addPickListLine,
-        deletePickListLine,
-        updatePickListLine,
-        updatePickListLineById} = useContext(PickListContext)
+        addPickList,
+        updatePickList,
+        } = useContext(PickListContext)
     const {getCustomers} = useContext(CustomerContext)
     const {getInventories} = useContext(InventoryContext)
     const {employee, getEmployees} = useContext(EmployeeContext)
@@ -80,11 +70,10 @@ export const PickListForm = () => {
     }
 
     useEffect(() => {
-        debugger
         getPickLists()
-        // .then(getCustomers())
-        // .then(getEmployees())
-        // .then(getPickListLines())
+        .then(getCustomers())
+        .then(getEmployees())
+        .then(getPickListLines())
     },[])
     
     return (

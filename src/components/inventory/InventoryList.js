@@ -10,6 +10,7 @@ export const InventoryList = () => {
     const {getInventories, deleteInventory, inventories} = useContext(InventoryContext)
     const { getEmployees, employees } = useContext(EmployeeContext)
     const { getBinLocations, bin_locations } = useContext(BinLocationContext)
+    
     const handleDelete = (id) => {
         deleteInventory(id)
     }
@@ -33,7 +34,7 @@ export const InventoryList = () => {
                     {
                         inventories && inventories.map((inventory) => {
                             return (
-                                <section>
+                                <section key={`inventory--${inventory.id}`}>
                                     <li >
                                         Description: {inventory.description}<br/>
                                         Unit Price: {inventory.unit_price}<br/>

@@ -26,11 +26,11 @@ export const BinLocationList = () => {
                 <button onClick={() => history.push("/bin_locations/create")}>
                     Create a new Bin Location
                 </button>
-                <ul className='bin_location_list'>
+                <ul  className='bin_location_list'>
                     {
                         bin_locations && bin_locations.map((bin_location) => {
                             return (
-                                <section>
+                                <section key={`bin_location--${bin_location.id}`}>
                                     <li >
                                         Bin Location Name: {bin_location.bin_location_name} <br/>
                                         <button onClick={() => { history.push(`/bin_locations/edit/${bin_location.id}`) }}>Edit</button>

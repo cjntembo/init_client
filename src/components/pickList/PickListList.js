@@ -3,21 +3,25 @@ import { useHistory } from 'react-router-dom'
 import { EmployeeContext } from "../employee/EmployeeProvider";
 import { CustomerContext } from "../customer/CustomerProvider";
 import { PickListContext  } from "./PickListProvider"
+import { InventoryContext } from "../inventory/InventoryProvider";
 // import "./Inventory.css"
 
 
 export const PickListList = () => { 
-    const {getPickLists, deletePickList, pick_lists} = useContext(PickListContext)
-    const { getEmployees, employees } = useContext(EmployeeContext)
-    const { getCustomers, customers } = useContext(CustomerContext)
+    const {getPickLists, deletePickList, pick_lists, setPickList} = useContext(PickListContext)
+    const { getEmployees, setEmployee,employee } = useContext(EmployeeContext)
+    const { getCustomers, setCustomer } = useContext(CustomerContext)
+    const { getInventories, setInventory} = useContext(InventoryContext)
+
     const handleDelete = (id) => {
         deletePickList(id)
     }
 
     useEffect(() => {
-        getEmployees()
         getPickLists()
-        getCustomers()
+        // getEmployees()
+        // getCustomers()
+        // getInventories()
     }, [])
 
     const history = useHistory()
@@ -33,11 +37,13 @@ export const PickListList = () => {
                     {
                         pick_lists && pick_lists.map((pick_list) => {
                             return (
-                                <section>
+                                <section key={`pick_list--${pick_list.id}`}>
                                     <li >
-                                        Customer: {pick_list.customer}<br/>
-                                        Pick By: {pick_list.picked_by}<br/>
+                                        
+                                        Customer: {pick_list.customer?.first_name} {pick_list.customer?.last_name}<br/>
+                                        Pick By: {pick_list?.employee?.first_name}<br/>
                                         Pick List Due Date: {pick_list.pick_list_date}<br/>
+                                        Detail: {pick_list?.pick_list_line}<br/>
                                         <button onClick={() => { history.push(`/pick_lists/edit/${pick_list.id}`) }}>Edit</button>
                                         <button onClick={() => { handleDelete(pick_list.id) }}>Delete Pick list</button>
                                     </li>
