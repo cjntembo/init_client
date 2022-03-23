@@ -25,7 +25,10 @@ export const InventoryProvider = (props) => {
             }
         })
         .then(res => res.json())
-        .then(setInventory)
+        .then(res => {
+          setInventory(res)
+          return res
+        })
     }
 
     const addInventory = inventory => {
