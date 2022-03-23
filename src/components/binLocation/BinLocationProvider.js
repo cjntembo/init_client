@@ -25,7 +25,10 @@ export const BinLocationProvider = (props) => {
             }
         })
         .then(res => res.json())
-        .then(setBin_location)
+        .then(res => {
+          setBin_location(res)
+          return res
+        })
     }
 
     const addBinLocation = bin_location => {

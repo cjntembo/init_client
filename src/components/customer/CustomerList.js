@@ -29,8 +29,8 @@ export const CustomerList = () => {
                             return (
                                 <section key={`customer--${customer.id}`}>
                                     <li >
-                                        {customer.first_name} {customer.last_name}<br/>
-                                        {customer.company}<br/>
+                                        Customer Name: {customer.first_name} {customer.last_name}<br/>
+                                        Customer Company: {customer.company}<br/>
 
                                         <button onClick={() => { history.push(`/customers/edit/${customer.id}`) }}>Edit</button>
                                         <button onClick={() => { handleDelete(customer.id) }}>Delete Customer</button>

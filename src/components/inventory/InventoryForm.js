@@ -29,18 +29,15 @@ export const InventoryForm = () => {
     useEffect(() => {
             getInventories()
             getEmployees()
-            console.log(employees)
         }, []);
 
     useEffect(() => {
-        if(inventoryId){
-        getInventoryById(parseInt(inventoryId)).then(res => setCurrentInventory(res)
-        )
+        if (inventoryId) {
+            getInventoryById(parseInt(inventoryId)).then(res => setCurrentInventory(res)
+            )
         }
         getBinLocations()
-        console.log(bin_locations)
-        
-    },[inventoryId]);
+    }, [inventoryId]);
 
     const handleControlledInputChange = (event) => {
         const newInventory = {...currentInventory}
@@ -53,24 +50,22 @@ export const InventoryForm = () => {
             window.alert("Please Enter New Inventory")
         } else {
             if (inventoryId) {
-                console.log(currentInventory)
                 updateInventory({
                     id: parseInt(currentInventory.id),
                     description: currentInventory.description,
                     unit_price: currentInventory.unit_price,
                     qty_available: currentInventory.qty_available,
-                    bin_locationId:parseInt(currentInventory.bin_location.id),
-                    employeeId:parseInt(currentInventory.created_by)
+                    bin_locationId: parseInt(currentInventory.bin_location.id),
+                    employeeId: parseInt(currentInventory.created_by)
                 })
                     .then(() => history.push("/inventories"))
             } else {
-                // console.log(currentInventory)
                 addInventory({
                     description: currentInventory.description,
                     unit_price: currentInventory.unit_price,
                     qty_available: currentInventory.qty_available,
-                    bin_locationId:parseInt(currentInventory.bin_location),
-                    employeeId:parseInt(currentInventory.created_by)
+                    bin_locationId: parseInt(currentInventory.bin_location),
+                    employeeId: parseInt(currentInventory.created_by)
                 })
                     .then(() => history.push("/inventories"))
             }
@@ -116,9 +111,9 @@ export const InventoryForm = () => {
                             <select name="bin_location" className="form-control"  onChange={handleControlledInputChange}>
                             <option value={currentInventory?.bin_location.id}>{currentInventory.bin_location.bin_location_name}</option>
                             {
-                                bin_locations.map(bin_location => (
+                                bin_locations.map(bin_location => {
                                     <option key={bin_location.id} value={bin_location.id}>{bin_location.bin_location_name}</option>
-                                ))
+                                })
                             }
                             </select>
                         </div>
