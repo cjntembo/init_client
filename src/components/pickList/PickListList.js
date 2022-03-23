@@ -4,7 +4,7 @@ import { EmployeeContext } from "../employee/EmployeeProvider";
 import { CustomerContext } from "../customer/CustomerProvider";
 import { PickListContext  } from "./PickListProvider"
 import { InventoryContext } from "../inventory/InventoryProvider";
-// import "./Inventory.css"
+import "./PickList.css"
 
 
 export const PickListList = () => { 
@@ -30,15 +30,15 @@ export const PickListList = () => {
         <>
             <div className='pick_lists'>
                 <h2 className='pick_list_title'>Pick Lists</h2>
-                <button onClick={() => history.push("/pick_lists/create")}>
+                <button className="create_button" onClick={() => history.push("/pick_lists/create")}>
                     Create a New Pick List
                 </button>
                 <ul className='pick_list_list'>
                     {
                         pick_lists && pick_lists.map((pick_list) => {
                             return (
-                                <section key={`pick_list--${pick_list.id}`}>
-                                    <li >
+                                <section className="pick_list-lis" key={`pick_list--${pick_list.id}`}>
+                                    <li className='pickList-li'>
                                         
                                         Customer: {pick_list.customer?.first_name} {pick_list.customer?.last_name}<br/>
                                         Pick By: {pick_list?.picked_by?.user?.first_name} {pick_list?.picked_by?.user?.last_name}<br/>

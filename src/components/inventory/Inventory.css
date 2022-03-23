@@ -1,0 +1,50 @@
+.inventory_list {
+    border: 5rem;
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 1rem;
+    padding: .5rem;
+}
+
+.inventories_title {
+    display: flex;
+    justify-content: center;
+    background-color: blue;
+    margin: 2rem;
+    padding: 1rem;
+}
+
+.inventories-li {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 60%;
+    border: 20rem;
+    justify-content: center;
+    margin: .5rem;
+    padding: .5rem;
+}
+
+.inventory_list_lis {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: .5rem;
+    border: 1rem solid black;
+    background-color: aliceblue;
+}
+
+.inventories {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    background-color: #f5e50b;
+}
+
+.create_button {
+    background-color: blue;
+    font-weight: bold;
+}

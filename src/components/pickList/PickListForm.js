@@ -80,6 +80,7 @@ export const PickListForm = () => {
         );
     
         setCheckedState(updatedCheckedState);
+    }
 
     const handlePickLine = (evt) => {
             const newPick_list_line = {...currentPickListLine}
@@ -203,5 +204,4 @@ export const PickListForm = () => {
             </form>
         </>
     )
-}
 }
