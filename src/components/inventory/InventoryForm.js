@@ -108,7 +108,7 @@ export const InventoryForm = () => {
                     <fieldset>
                         <div className="inventory_form_group">
                             <label htmlFor="bin_location_id">Bin Location: </label>
-                            <select name="bin_location" className="form-control"  onChange={handleControlledInputChange}>
+                            <select name="bin_location" className="form-control" onChange={handleControlledInputChange}>
                             <option value={currentInventory?.bin_location.id}>{currentInventory.bin_location.bin_location_name}</option>
                             {
                                 bin_locations.map(bin_location => {

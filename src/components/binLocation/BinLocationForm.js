@@ -46,14 +46,14 @@ export const BinLocationForm = () => {
                 updateBinLocation({
                     id: parseInt(currentBinLocation.id),
                     bin_location_name: currentBinLocation.bin_location_name,
-                    employeeId: parseInt(currentBinLocation.binned_by.id)
+                    employeeId: parseInt(currentBinLocation.binned_by)
                 })
                     .then(() => history.push("/bin_locations"))
             } else {
                 console.log(currentBinLocation)
                 addBinLocation({
                     bin_location_name: currentBinLocation.bin_location_name,
-                    employeeId: parseInt(currentBinLocation.binned_by.id),
+                    employeeId: parseInt(currentBinLocation.binned_by),
                 })
                     .then(() => history.push("/bin_locations"))
             }

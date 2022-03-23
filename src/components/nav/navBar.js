@@ -7,7 +7,10 @@ export const NavBar = () => {
     const history = useHistory()
     return (
         <ul className="navbar">
-            <li className="navbar__item active">
+            {/* <a target="_blank" href="./init_final.png">
+            <script src="./init_final.png" alt="Init_logo"></script>
+            </a> */}
+            <li id="Init" className="navbar__item active">
                 <Link className="navbar__link" to="/">Init</Link>
             </li>
             <li className="navbar__item">

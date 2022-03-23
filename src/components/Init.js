@@ -4,7 +4,7 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/navBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
-
+import "./Init.css"
 
 export const Init = () => {
     const history = useHistory()

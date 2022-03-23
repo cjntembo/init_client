@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { BinLocationContext } from "../binLocation/BinLocationProvider";
 import { EmployeeContext } from "../employee/EmployeeProvider";
 import { InventoryContext  } from "./InventoryProvider"
-// import "./Inventory.css"
+import "./Inventory.css"
 
 
 export const InventoryList = () => { 
@@ -27,15 +27,15 @@ export const InventoryList = () => {
         <>
             <div className='inventories'>
                 <h2 className='inventories_title'>Inventory</h2>
-                <button onClick={() => history.push("/inventories/create")}>
+                <button className="create_button" onClick={() => history.push("/inventories/create")}>
                     Create New Inventory
                 </button>
                 <ul className='inventory_list'>
                     {
                         inventories && inventories.map((inventory) => {
                             return (
-                                <section key={`inventory--${inventory.id}`}>
-                                    <li >
+                                <section className="inventory_list_lis" key={`inventory--${inventory.id}`}>
+                                    <li className='inventories-li'>
                                         Description: {inventory.description}<br/>
                                         Unit Price: $ {inventory.unit_price}<br/>
                                         Quantity Available: {inventory.qty_available}<br/>

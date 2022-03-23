@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react"
 import { useHistory } from 'react-router-dom'
 import { CustomerContext  } from "./CustomerProvider"
-// import "./Customer.css"
+import "./Customer.css"
 
 
 export const CustomerList = () => { 
@@ -20,15 +20,15 @@ export const CustomerList = () => {
         <>
             <div className='customers'>
                 <h2 className='customers_title'>Customers</h2>
-                <button onClick={() => history.push("/customers/create")}>
+                <button className="create_button" onClick={() => history.push("/customers/create")}>
                     Create a new Customer
                 </button>
                 <ul className='customers_list'>
                     {
                         customers && customers.map((customer) => {
                             return (
-                                <section key={`customer--${customer.id}`}>
-                                    <li >
+                                <section className="customer_list_lis" key={`customer--${customer.id}`}>
+                                    <li className='customers-li'>
                                         Customer Name: {customer.first_name} {customer.last_name}<br/>
                                         Customer Company: {customer.company}<br/>
 
