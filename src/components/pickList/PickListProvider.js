@@ -28,7 +28,9 @@ export const PickListProvider = (props) => {
             }
         })
         .then(res => res.json())
-        .then(setPickList)
+        .then(res => {setPickList(res)
+        return res
+      })
     }
 
     const addPickList = pick_list => {
@@ -82,14 +84,14 @@ export const PickListProvider = (props) => {
 
 
     //   pickListLines
-      const getPickListLines = () => {
-        return fetch(`${url}/pick_list_lines`, {
-            headers: {
-                "Authorization": `Token ${localStorage.getItem("init_final_token")}`
-            }
-        })
-            .then(response => response.json())
-            .then(setPickListLines)
+    const getPickListLines = () => {
+      return fetch(`${url}/pick_list_lines`, {
+          headers: {
+              "Authorization": `Token ${localStorage.getItem("init_final_token")}`
+          }
+      })
+          .then(response => response.json())
+          .then(setPickListLines)
     }
 
     const getPickListLineById = pick_list_lineId => {
@@ -99,7 +101,10 @@ export const PickListProvider = (props) => {
             }
         })
         .then(res => res.json())
-        .then(setPickListLine)
+        .then(res => {
+          setPickListLine(res)
+          return res
+        })
     }
 
     const addPickListLine = pick_list_line => {

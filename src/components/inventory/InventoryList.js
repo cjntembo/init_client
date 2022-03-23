@@ -10,7 +10,7 @@ export const InventoryList = () => {
     const {getInventories, deleteInventory, inventories} = useContext(InventoryContext)
     const { getEmployees, employees } = useContext(EmployeeContext)
     const { getBinLocations, bin_locations } = useContext(BinLocationContext)
-    
+
     const handleDelete = (id) => {
         deleteInventory(id)
     }
@@ -37,9 +37,9 @@ export const InventoryList = () => {
                                 <section key={`inventory--${inventory.id}`}>
                                     <li >
                                         Description: {inventory.description}<br/>
-                                        Unit Price: {inventory.unit_price}<br/>
+                                        Unit Price: $ {inventory.unit_price}<br/>
                                         Quantity Available: {inventory.qty_available}<br/>
-                                        {/* {inventory.bin_location}  */}
+                                        Bin Location: {inventory.bin_location.bin_location_name}<br/>
                                         <button onClick={() => { history.push(`/inventories/edit/${inventory.id}`) }}>Edit</button>
                                         <button onClick={() => { handleDelete(inventory.id) }}>Delete Inventory</button>
                                     </li>

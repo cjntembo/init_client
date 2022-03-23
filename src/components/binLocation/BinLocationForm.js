@@ -7,21 +7,30 @@ import { BinLocationContext } from "./BinLocationProvider"
 export const BinLocationForm = () => {
     const history = useHistory()
     const {updateBinLocation,
-        updateBinLocationById,
         getBinLocations,
         addBinLocation,
         getBinLocationById,
-        bin_location} = useContext(BinLocationContext)
-
-    const {employee, getEmployees} = useContext(EmployeeContext)
+        } = useContext(BinLocationContext)
 
     const { bin_locationId } = useParams()
-    const { employeeId } = useParams()
+
+    const {employees, getEmployees} = useContext(EmployeeContext)
 
     const [ currentBinLocation, setCurrentBinLocation ] = useState({
         bin_location_name:"",
         binned_by:"",
     })
+    useEffect(() => {
+            getBinLocations()
+            getEmployees()
+        },[]);
+
+    useEffect(() => {
+        if(bin_locationId){
+        getBinLocationById(parseInt(bin_locationId)).then(res => setCurrentBinLocation(res)
+        )
+    }
+    },[bin_locationId]);
 
     const handleControlledInputChange = (event) => {
         const newBinLocation = {...currentBinLocation}
@@ -33,59 +42,51 @@ export const BinLocationForm = () => {
         if (bin_locationId === 0) {
             window.alert("Please Create a New Bin Location")
         } else {
-            if (bin_locationId) {
+            if (bin_locationId) {console.log(currentBinLocation)
                 updateBinLocation({
-                    id: bin_location.id,
-                    bin_location_name: bin_location.bin_location_name,
-                    binned_by: bin_location.employee.id
-                    
+                    id: parseInt(currentBinLocation.id),
+                    bin_location_name: currentBinLocation.bin_location_name,
+                    employeeId: parseInt(currentBinLocation.binned_by.id)
                 })
                     .then(() => history.push("/bin_locations"))
             } else {
-            
+                console.log(currentBinLocation)
                 addBinLocation({
                     bin_location_name: currentBinLocation.bin_location_name,
-                    binned_by: bin_location.employee.id
-                    
+                    employeeId: parseInt(currentBinLocation.binned_by.id),
                 })
                     .then(() => history.push("/bin_locations"))
             }
         }
     }
 
-    useEffect(() => {
-        getBinLocations()
-        getEmployees()
-    },[]);
     
-    useEffect(() => {
-        getBinLocationById(parseInt(bin_locationId))
-        .then(bin_location => {
-            setCurrentBinLocation(bin_location)
-        })
-    },[]);
 
     return (
         <>
             <form className='bin_location_form'>
-                <h2>{bin_location?.bin_location_name}</h2>
+                <h2>{currentBinLocation?.bin_location_name}</h2>
                 <div className='Bin_location_edit'>
                     <fieldset>
                         <div className="bin_location_form_group">
                             <label htmlFor="bin_location_name">Bin Location Name: </label>
                             <input type="text" name="bin_location_name" required autoFocus className="form-control"
-                                placeholder={currentBinLocation?.bin_location_name}
-                                defaultValue={bin_location ? bin_location?.bin_location_name : currentBinLocation?.bin_location_name}
+                                placeholder="Enter Name"
+                                value={currentBinLocation?.bin_location_name}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
-                        <div className="bin_location_form_group">
-                            <label htmlFor="binned_by">Binned By: </label>
-                            <input type="text" name="binned_by" required autoFocus className="form-control"
-                                placeholder={currentBinLocation?.binned_by}
-                                defaultValue={bin_location ? bin_location?.binned_by : currentBinLocation?.binned_by}
-                                onChange={handleControlledInputChange} />
+                        <div className="bi_location_form_group">
+                            <label htmlFor="binned_by_id">Binned By: </label>
+                            <select name="binned_by" className="form-control"  onChange={handleControlledInputChange}>
+                            <option value="0">"Select Employee"</option>
+                            {
+                                employees.map(binned_by => (
+                                    <option key={binned_by.id} value={binned_by.id}>{binned_by.user.first_name} {binned_by.user.last_name}</option>
+                                ))
+                            }
+                            </select>
                         </div>
                     </fieldset>
                     <button

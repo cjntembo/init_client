@@ -32,7 +32,7 @@ export const BinLocationList = () => {
                             return (
                                 <section key={`bin_location--${bin_location.id}`}>
                                     <li >
-                                        Bin Location Name: {bin_location.bin_location_name} <br/>
+                                        Bin Location: {bin_location.bin_location_name} <br/>
                                         <button onClick={() => { history.push(`/bin_locations/edit/${bin_location.id}`) }}>Edit</button>
                                         <button onClick={() => { handleDelete(bin_location.id) }}>Delete Bin Location</button>
                                     </li>
