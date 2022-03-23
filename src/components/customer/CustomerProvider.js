@@ -25,7 +25,10 @@ export const CustomerProvider = (props) => {
             }
         })
         .then(res => res.json())
-        .then(setCustomer)
+        .then(res => {
+          setCustomer(res)
+          return res
+        })
     }
 
     const addCustomer = customer => {

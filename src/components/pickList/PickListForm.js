@@ -29,13 +29,14 @@ export const PickListForm = () => {
         customer:"",
         picked_by:"",
         pick_list_date:"",
+        pick_list_line:""
     })
 
-    const [ currentPickListLine, setCurrentPickListLine] =useState({
-        pick_list:"",
-        inventory:"",
-        qty_requested:""
-    })
+    // const [ currentPickListLine, setCurrentPickListLine] =useState({
+    //     pick_list:"",
+    //     inventory:"",
+    //     qty_requested:""
+    // })
 
     const handleControlledInputChange = (event) => {
         const newPickList = {...currentPickList}
@@ -53,7 +54,7 @@ export const PickListForm = () => {
                     customer: pick_list.customer,
                     picked_by: pick_list.picked_by,
                     pick_list_date: pick_list.pick_list_date,
-                    pick_list_line: pick_list.pick_list_line
+                    pick_list_line: pick_list.pick_list_lines
                 })
                     .then(() => history.push("/pick_lists"))
             } else {
@@ -62,7 +63,7 @@ export const PickListForm = () => {
                     customer: currentPickList.customer,
                     picked_by: currentPickList.picked_by,
                     pick_list_date: pick_list.pick_list_date,
-                    pick_list_line: currentPickList.pick_list_line
+                    pick_list_line: currentPickList.pick_list_lines
                 })
                     .then(() => history.push("/pick_lists"))
             }
@@ -105,6 +106,15 @@ export const PickListForm = () => {
                             <input type="date" name="pick_list_date" required autoFocus className="form-control"
                                 placeholder={currentPickList?.pick_list_date}
                                 defaultValue={pick_list ? pick_list?.pick_list_date : currentPickList?.pick_list_date}
+                                onChange={handleControlledInputChange} />
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div className="pick_list_form_group">
+                            <label htmlFor="pick_list_line">Pick List detail: </label>
+                            <input type="text" name="pick_list_line" required autoFocus className="form-control"
+                                placeholder={currentPickList?.pick_list_line}
+                                defaultValue={pick_list ? pick_list?.pick_list_line : currentPickList?.pick_list_line}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>

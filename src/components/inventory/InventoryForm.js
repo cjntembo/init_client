@@ -8,18 +8,15 @@ import { InventoryContext } from "./InventoryProvider"
 export const InventoryForm = () => {
     const history = useHistory()
     const {updateInventory,
-        updateInventoryById,
         getInventories,
         addInventory,
         getInventoryById,
-        inventory} = useContext(InventoryContext)
-
-    const {employee, getEmployees} = useContext(EmployeeContext)
-    const {getBinLocations} = useContext(BinLocationContext)
+        } = useContext(InventoryContext)
 
     const { inventoryId } = useParams()
-    const { employeeId } = useParams()
 
+    const {employees, getEmployees} = useContext(EmployeeContext)
+    const {bin_locations, getBinLocations} = useContext(BinLocationContext)
     const [ currentInventory, setCurrentInventory ] = useState({
         description:"",
         unit_price:"",
@@ -27,6 +24,23 @@ export const InventoryForm = () => {
         bin_location:"",
         created_by:""
     })
+
+
+    useEffect(() => {
+            getInventories()
+            getEmployees()
+            console.log(employees)
+        }, []);
+
+    useEffect(() => {
+        if(inventoryId){
+        getInventoryById(parseInt(inventoryId)).then(res => setCurrentInventory(res)
+        )
+        }
+        getBinLocations()
+        console.log(bin_locations)
+        
+    },[inventoryId]);
 
     const handleControlledInputChange = (event) => {
         const newInventory = {...currentInventory}
@@ -39,51 +53,42 @@ export const InventoryForm = () => {
             window.alert("Please Enter New Inventory")
         } else {
             if (inventoryId) {
+                console.log(currentInventory)
                 updateInventory({
-                    id: inventory.id,
-                    description: inventory.description,
-                    unit_price: inventory.unit_price,
-                    bin_location:parseInt(inventory.bin_location.id),
-                    created_by:parseInt(inventory.employee.id)
+                    id: parseInt(currentInventory.id),
+                    description: currentInventory.description,
+                    unit_price: currentInventory.unit_price,
+                    qty_available: currentInventory.qty_available,
+                    bin_locationId:parseInt(currentInventory.bin_location.id),
+                    employeeId:parseInt(currentInventory.created_by)
                 })
                     .then(() => history.push("/inventories"))
             } else {
-                
+                // console.log(currentInventory)
                 addInventory({
                     description: currentInventory.description,
-                    unit_price: inventory.unit_price,
-                    bin_location:parseInt(inventory.bin_location.id),
-                    created_by:parseInt(inventory.employee.id)
+                    unit_price: currentInventory.unit_price,
+                    qty_available: currentInventory.qty_available,
+                    bin_locationId:parseInt(currentInventory.bin_location),
+                    employeeId:parseInt(currentInventory.created_by)
                 })
                     .then(() => history.push("/inventories"))
             }
         }
     }
 
-    useEffect(() => {
-            getInventories()
-            .then(getBinLocations())
-            .then(getEmployees())
-        }, []);
 
-    useEffect(() => {
-        getInventoryById(parseInt(inventoryId))
-        .then(inventory => {
-            setCurrentInventory(inventory)
-        })
-    },[]);
-    
     return (
         <>
             <form className='Inventory_form'>
-                <h2>{inventory?.description}</h2>
+                <h2>{currentInventory?.description}</h2>
                 <div className='Inventory_edit'>
                     <fieldset>
                         <div className="inventory_form_group">
                             <label htmlFor="description">Inventory Name: </label>
                             <input type="text" name="description" required autoFocus className="form-control"
-                                placeholder={currentInventory?.description}
-                                defaultValue={inventory ? inventory?.description : currentInventory?.description}
+                                placeholder="Enter Description"
+                                defaultValue={currentInventory?.description}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
@@ -91,8 +96,8 @@ export const InventoryForm = () => {
                         <div className="inventory_form_group">
                             <label htmlFor="unit_price">Unit Price: </label>
                             <input type="number" name="unit_price" required autoFocus className="form-control"
-                                placeholder={currentInventory?.unit_price}
-                                defaultValue={inventory ? inventory?.unit_price : currentInventory?.unit_price}
+                                placeholder="Enter Price per Unit"
+                                defaultValue={currentInventory?.unit_price}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
@@ -100,27 +105,35 @@ export const InventoryForm = () => {
                         <div className="inventory_form_group">
                             <label htmlFor="qty_available">Quantity Available: </label>
                             <input type="number" name="qty_available" required autoFocus className="form-control"
-                                placeholder={currentInventory?.qty_available}
-                                defaultValue={inventory ? inventory?.qty_available : currentInventory?.qty_available}
+                                placeholder="Enter Quantity"
+                                defaultValue={currentInventory?.qty_available}
                                 onChange={handleControlledInputChange} />
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="inventory_form_group">
-                            <label htmlFor="bin_location">Bin Location: </label>
-                            <input type="text" name="bin_location" required autoFocus className="form-control"
-                                placeholder={currentInventory?.bin_location}
-                                defaultValue={inventory ? inventory?.bin_location : currentInventory?.bin_location}
-                                onChange={handleControlledInputChange} />
+                            <label htmlFor="bin_location_id">Bin Location: </label>
+                            <select name="bin_location" className="form-control"  onChange={handleControlledInputChange}>
+                            <option value={currentInventory?.bin_location.id}>{currentInventory.bin_location.bin_location_name}</option>
+                            {
+                                bin_locations.map(bin_location => (
+                                    <option key={bin_location.id} value={bin_location.id}>{bin_location.bin_location_name}</option>
+                                ))
+                            }
+                            </select>
                         </div>
                     </fieldset>
                     <fieldset>
                         <div className="inventory_form_group">
-                            <label htmlFor="created_by">Created By: </label>
-                            <input type="text" name="created_by" required autoFocus className="form-control"
-                                placeholder={currentInventory?.created_by}
-                                defaultValue={inventory ? inventory?.created_by : currentInventory?.created_by}
-                                onChange={handleControlledInputChange} />
+                            <label htmlFor="created_by_id">Created By: </label>
+                            <select name="created_by" className="form-control"  onChange={handleControlledInputChange}>
+                            <option value="0">"Select Employee"</option>
+                            {
+                                employees.map(created_by => (
+                                    <option key={created_by.id} value={created_by.id}>{created_by.user.first_name} {created_by.user.last_name}</option>
+                                ))
+                            }
+                            </select>
                         </div>
                     </fieldset>
                     <button
