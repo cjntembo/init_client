@@ -8,10 +8,10 @@ import "./PickList.css"
 
 
 export const PickListList = () => { 
-    const {getPickLists, deletePickList, pick_lists, setPickList, pickListLines, getPickListLines} = useContext(PickListContext)
+    const {getPickLists, deletePickList, pick_lists, setPickList, pick_list_lines, getPickListLines} = useContext(PickListContext)
     const { getEmployees, setEmployee,employee } = useContext(EmployeeContext)
     const { getCustomers, setCustomer } = useContext(CustomerContext)
-    const { getInventories, setInventory} = useContext(InventoryContext)
+    const { inventories, getInventories, setInventory} = useContext(InventoryContext)
 
     const handleDelete = (id) => {
         deletePickList(id)
@@ -21,7 +21,8 @@ export const PickListList = () => {
         getPickLists()
         // getEmployees()
         // getCustomers()
-        // getInventories()
+        getInventories()
+        getPickListLines()
     }, [])
 
     const history = useHistory()
@@ -39,13 +40,36 @@ export const PickListList = () => {
                             return (
                                 <section className="pick_list-lis" key={`pick_list--${pick_list.id}`}>
                                     <li className='pickList-li'>
-                                        
-                                        Customer: {pick_list.customer?.first_name} {pick_list.customer?.last_name}<br/>
-                                        Pick By: {pick_list?.picked_by?.user?.first_name} {pick_list?.picked_by?.user?.last_name}<br/>
-                                        Pick List Due Date: {pick_list.pick_list_date}<br/>
-                                        {/* Pick Detail: <li>
-                                            {pickListLines.map(() => {pickListLine})}
-                                            </li>> */}
+                                        Customer: {pick_list.customer?.first_name} {pick_list.customer?.last_name}<br />
+                                        Pick By: {pick_list?.picked_by?.user?.first_name} {pick_list?.picked_by?.user?.last_name}<br />
+                                        Pick List Due Date: {pick_list.pick_list_date}<br />
+
+
+
+                                        <fieldset>
+                                            <div className="inventory_form_group">
+                                                <label htmlFor="inventory_id">Pick List Detail: </label>
+                                                <ul className="inventories-list">
+                                                    {pick_list_lines.map(({ inventory, qty_requested }, index) => {
+                                                        return (
+                                                            <li key={index}>
+                                                                <div className="inventories-list-item">
+                                                                    <div className="left-section">
+                                                                        <label htmlFor={`custom-checkbox-${index}`}>{inventory?.description}</label>
+                                                                    </div>
+                                                                    <div className="right-section">Quantity Available: {inventory?.qty_available}</div>
+                                                                    <label htmlFor="qty_requested">Quantity Requested: {qty_requested}</label>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                            </div>
+                                        </fieldset>
+
+
+
+
                                         <button onClick={() => { history.push(`/pick_lists/edit/${pick_list.id}`) }}>Edit</button>
                                         <button onClick={() => { handleDelete(pick_list.id) }}>Delete Pick list</button>
                                     </li>

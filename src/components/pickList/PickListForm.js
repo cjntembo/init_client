@@ -157,7 +157,6 @@ export const PickListForm = () => {
                     <fieldset>
                         <div className="inventory_form_group">
                             <label htmlFor="inventory_id">Add Inventory: </label>
-                            {/* <input type="checkbox" name="inventory" className="form-control" key={currentPickListLine?.inventory.description} value={currentPickListLine?.inventory.qty_available} onChange={handlePickLine}/> */}
                             <ul className="inventories-list">
                                 {inventories.map(({ description, qty_available }, index) => {
                                     return (
@@ -174,18 +173,13 @@ export const PickListForm = () => {
                                                     />
                                                     <label htmlFor={`custom-checkbox-${index}`}>{description}</label>
                                                 </div>
-                                                <div className="right-section">{qty_available}</div>
-                                                <input type="number" name="qty_requested" className="form-control" value={currentPickListLine?.qty_requested} onchange={handlePickLine} />
+                                                <div className="right-section">Quantity Available: {qty_available}</div>
+                                                <label htmlFor="qty_requested">Quantity Requested: </label>
+                                                <input type="number" name="qty_requested" className="form-control-requested" value={currentPickListLine?.qty_requested} onchange={handlePickLine} />
                                             </div>
                                         </li>
                                     );
                                 })}
-                                <li>
-                                    <div className="qty_requested-list-item">
-                                        <div className="left-section">Quantity Requested:</div>
-                                        <div className="right-section">{currentPickListLine?.qty_requested}</div>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </fieldset>
