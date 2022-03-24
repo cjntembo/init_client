@@ -21,8 +21,8 @@ export const PickListList = () => {
         getPickLists()
         // getEmployees()
         // getCustomers()
-        getInventories()
-        getPickListLines()
+        // getPickListLines()
+        // getInventories()
     }, [])
 
     const history = useHistory()
@@ -48,9 +48,9 @@ export const PickListList = () => {
 
                                         <fieldset>
                                             <div className="inventory_form_group">
-                                                <label htmlFor="inventory_id">Pick List Detail: </label>
-                                                <ul className="inventories-list">
-                                                    {pick_list_lines.map(({ inventory, qty_requested }, index) => {
+                                                <label htmlFor="pick_list_id">Pick List Detail: </label>
+                                                <ul key="pick_listId" className="pick_list_detail-list">
+                                                    {pick_list.pick_list_lines.map(({ inventory, qty_requested }, index) => {
                                                         return (
                                                             <li key={index}>
                                                                 <div className="inventories-list-item">
